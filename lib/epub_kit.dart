@@ -1,5 +1,3 @@
-library epub;
-
 export 'src/utils/enum_from_string.dart';
 
 export 'src/epub_reader.dart';

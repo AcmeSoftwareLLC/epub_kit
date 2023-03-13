@@ -5,23 +5,25 @@ import 'epub_navigation_label.dart';
 import 'epub_navigation_target.dart';
 
 class EpubNavigationList {
-  String Id;
-  String Class;
-  List<EpubNavigationLabel> NavigationLabels;
-  List<EpubNavigationTarget> NavigationTargets;
+  String? Id;
+  String? Class;
+  List<EpubNavigationLabel>? NavigationLabels;
+  List<EpubNavigationTarget>? NavigationTargets;
 
   @override
   int get hashCode {
-    var objects = []
-      ..add(Id.hashCode)
-      ..add(Class.hashCode)
-      ..addAll(NavigationLabels?.map((label) => label.hashCode) ?? [0])
-      ..addAll(NavigationTargets?.map((target) => target.hashCode) ?? [0]);
+    var objects = [
+      Id.hashCode,
+      Class.hashCode,
+      ...NavigationLabels?.map((label) => label.hashCode) ?? [0],
+      ...NavigationTargets?.map((target) => target.hashCode) ?? [0]
+    ];
     return hashObjects(objects);
   }
 
+  @override
   bool operator ==(other) {
-    var otherAs = other as EpubNavigationList;
+    var otherAs = other as EpubNavigationList?;
     if (otherAs == null) return false;
 
     if (!(Id == otherAs.Id && Class == otherAs.Class)) {

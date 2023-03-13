@@ -6,45 +6,47 @@ import 'package:quiver/core.dart';
 import 'epub_text_content_file_ref.dart';
 
 class EpubChapterRef {
-  EpubTextContentFileRef epubTextContentFileRef;
+  EpubTextContentFileRef? epubTextContentFileRef;
 
-  String Title;
-  String ContentFileName;
-  String Anchor;
-  List<EpubChapterRef> SubChapters;
+  String? Title;
+  String? ContentFileName;
+  String? Anchor;
+  List<EpubChapterRef>? SubChapters;
 
-  EpubChapterRef(EpubTextContentFileRef epubTextContentFileRef) {
+  EpubChapterRef(EpubTextContentFileRef? epubTextContentFileRef) {
     this.epubTextContentFileRef = epubTextContentFileRef;
   }
 
   @override
   int get hashCode {
-    var objects = []
-      ..add(Title.hashCode)
-      ..add(ContentFileName.hashCode)
-      ..add(Anchor.hashCode)
-      ..add(epubTextContentFileRef.hashCode)
-      ..addAll(SubChapters?.map((subChapter) => subChapter.hashCode) ?? [0]);
+    var objects = [
+      Title.hashCode,
+      ContentFileName.hashCode,
+      Anchor.hashCode,
+      epubTextContentFileRef.hashCode,
+      ...SubChapters?.map((subChapter) => subChapter.hashCode) ?? [0],
+    ];
     return hashObjects(objects);
   }
 
+  @override
   bool operator ==(other) {
-    var otherAs = other as EpubChapterRef;
-    if (otherAs == null) {
+    if (!(other is EpubChapterRef)) {
       return false;
     }
-    return Title == otherAs.Title &&
-        ContentFileName == otherAs.ContentFileName &&
-        Anchor == otherAs.Anchor &&
-        epubTextContentFileRef == otherAs.epubTextContentFileRef &&
-        collections.listsEqual(SubChapters, otherAs.SubChapters);
+    return Title == other.Title &&
+        ContentFileName == other.ContentFileName &&
+        Anchor == other.Anchor &&
+        epubTextContentFileRef == other.epubTextContentFileRef &&
+        collections.listsEqual(SubChapters, other.SubChapters);
   }
 
   Future<String> readHtmlContent() async {
-    return epubTextContentFileRef.readContentAsText();
+    return epubTextContentFileRef!.readContentAsText();
   }
 
+  @override
   String toString() {
-    return "Title: ${Title}, Subchapter count: ${SubChapters.length}";
+    return 'Title: $Title, Subchapter count: ${SubChapters!.length}';
   }
 }
