@@ -1,9 +1,8 @@
-# dart-epub
-[![Build Status](https://travis-ci.org/orthros/dart-epub.svg?branch=master)](https://travis-ci.org/orthros/dart-epub)
+# Epub Kit
 
 Epub Reader and Writer for Dart inspired by [this fantastic C# Epub Reader](https://github.com/versfx/EpubReader)
 
-This does not rely on the ```dart:io``` package in any way, so it is avilable for both desktop and web-based implementations
+This does not rely on the ```dart:io``` package in any way, so it is available for both desktop and web-based implementations
 
 ## Installing
 Add the package to the ```dependencies``` section of your pubspec.yaml
@@ -57,7 +56,7 @@ epubBook.Chapters.forEach((EpubChapter chapter) {
             
 // CONTENT
 
-// Book's content (HTML files, stlylesheets, images, fonts, etc.)
+// Book's content (HTML files, stylesheets, images, fonts, etc.)
 EpubContent bookContent = epubBook.Content;
 
             
