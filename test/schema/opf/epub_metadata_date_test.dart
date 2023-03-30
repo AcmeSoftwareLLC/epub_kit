@@ -1,21 +1,16 @@
-library epubreadertest;
-
-import 'package:epub/src/schema/opf/epub_metadata_date.dart';
+import 'package:epub_kit/src/schema/opf/epub_metadata_date.dart';
 import 'package:test/test.dart';
 
 main() async {
   var reference = new EpubMetadataDate()
-    ..Date = "a date"
-    ..Event = "Some important event";
+    ..date = "a date"
+    ..event = "Some important event";
 
-  EpubMetadataDate testMetadataDate;
+  late EpubMetadataDate testMetadataDate;
   setUp(() async {
     testMetadataDate = new EpubMetadataDate()
-      ..Date = reference.Date
-      ..Event = reference.Event;
-  });
-  tearDown(() async {
-    testMetadataDate = null;
+      ..date = reference.date
+      ..event = reference.event;
   });
 
   group("EpubMetadataIdentifier", () {
@@ -25,11 +20,11 @@ main() async {
       });
 
       test("is false when Date changes", () async {
-        testMetadataDate.Date = "A different Date";
+        testMetadataDate.date = "A different Date";
         expect(testMetadataDate, isNot(reference));
       });
       test("is false when Event changes", () async {
-        testMetadataDate.Event = "A non important event";
+        testMetadataDate.event = "A non important event";
         expect(testMetadataDate, isNot(reference));
       });
     });
@@ -40,11 +35,11 @@ main() async {
       });
 
       test("is false when Date changes", () async {
-        testMetadataDate.Date = "A different date";
+        testMetadataDate.date = "A different date";
         expect(testMetadataDate.hashCode, isNot(reference.hashCode));
       });
       test("is false when Event changes", () async {
-        testMetadataDate.Event = "A non important event";
+        testMetadataDate.event = "A non important event";
         expect(testMetadataDate.hashCode, isNot(reference.hashCode));
       });
     });

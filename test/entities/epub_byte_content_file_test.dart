@@ -1,29 +1,23 @@
-library epubreadertest;
-
-import 'package:epub/epub.dart';
+import 'package:epub_kit/epub_kit.dart';
 import 'package:test/test.dart';
 
 main() async {
   var reference = new EpubByteContentFile();
   reference
-    ..Content = [0, 1, 2, 3]
-    ..ContentMimeType = "application/test"
-    ..ContentType = EpubContentType.OTHER
-    ..FileName = "orthrosFile";
+    ..content = [0, 1, 2, 3]
+    ..contentMimeType = "application/test"
+    ..contentType = EpubContentType.other
+    ..fileName = "orthrosFile";
 
-  EpubByteContentFile testFile;
+  late EpubByteContentFile testFile;
 
   setUp(() async {
     testFile = new EpubByteContentFile();
     testFile
-      ..Content = [0, 1, 2, 3]
-      ..ContentMimeType = "application/test"
-      ..ContentType = EpubContentType.OTHER
-      ..FileName = "orthrosFile";
-  });
-
-  tearDown(() async {
-    testFile = null;
+      ..content = [0, 1, 2, 3]
+      ..contentMimeType = "application/test"
+      ..contentType = EpubContentType.other
+      ..fileName = "orthrosFile";
   });
 
   group("EpubByteContentFile", () {
@@ -32,22 +26,22 @@ main() async {
     });
 
     test(".equals is false when Content changes", () async {
-      testFile.Content = [3, 2, 1, 0];
+      testFile.content = [3, 2, 1, 0];
       expect(testFile, isNot(reference));
     });
 
     test(".equals is false when ContentMimeType changes", () async {
-      testFile.ContentMimeType = "application/different";
+      testFile.contentMimeType = "application/different";
       expect(testFile, isNot(reference));
     });
 
     test(".equals is false when ContentType changes", () async {
-      testFile.ContentType = EpubContentType.CSS;
+      testFile.contentType = EpubContentType.css;
       expect(testFile, isNot(reference));
     });
 
     test(".equals is false when FileName changes", () async {
-      testFile.FileName = "a_different_file_name.txt";
+      testFile.fileName = "a_different_file_name.txt";
       expect(testFile, isNot(reference));
     });
 
@@ -56,22 +50,22 @@ main() async {
     });
 
     test('.hashCode changes when Content changes', () async {
-      testFile.Content = [3, 2, 1, 0];
+      testFile.content = [3, 2, 1, 0];
       expect(testFile.hashCode, isNot(reference.hashCode));
     });
 
     test('.hashCode changes when ContentMimeType changes', () async {
-      testFile.ContentMimeType = "application/orthros";
+      testFile.contentMimeType = "application/orthros";
       expect(testFile.hashCode, isNot(reference.hashCode));
     });
 
     test('.hashCode changes when ContentType changes', () async {
-      testFile.ContentType = EpubContentType.CSS;
+      testFile.contentType = EpubContentType.css;
       expect(testFile.hashCode, isNot(reference.hashCode));
     });
 
     test('.hashCode changes when FileName changes', () async {
-      testFile.FileName = "a_different_file_name";
+      testFile.fileName = "a_different_file_name";
       expect(testFile.hashCode, isNot(reference.hashCode));
     });
   });

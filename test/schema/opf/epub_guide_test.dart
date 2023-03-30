@@ -1,8 +1,6 @@
-library epubreadertest;
-
 import 'dart:math' show Random;
 
-import 'package:epub/src/schema/opf/epub_guide.dart';
+import 'package:epub_kit/src/schema/opf/epub_guide.dart';
 import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
@@ -13,20 +11,18 @@ main() async {
 
   var reference = generator.randomEpubGuide();
 
-  EpubGuide testGuide;
+  late EpubGuide testGuide;
   setUp(() async {
-    testGuide = new EpubGuide()..Items = List.from(reference.Items);
+    testGuide = EpubGuide()..items = List.from(reference.items ?? []);
   });
-  tearDown(() async {
-    testGuide = null;
-  });
+
   group("EpubGuide", () {
     group(".equals", () {
       test("is true for equivalent objects", () async {
         expect(testGuide, equals(reference));
       });
       test("is false when Items changes", () async {
-        testGuide.Items.add(generator.randomEpubGuideReference());
+        testGuide.items!.add(generator.randomEpubGuideReference());
         expect(testGuide, isNot(reference));
       });
     });
@@ -36,7 +32,7 @@ main() async {
         expect(testGuide.hashCode, equals(reference.hashCode));
       });
       test("is false when Items changes", () async {
-        testGuide.Items.add(generator.randomEpubGuideReference());
+        testGuide.items!.add(generator.randomEpubGuideReference());
         expect(testGuide.hashCode, isNot(reference.hashCode));
       });
     });

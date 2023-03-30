@@ -1,11 +1,9 @@
-library epubreadertest;
-
 import 'dart:io' as io;
 
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';
 
-import 'package:epub/epub.dart';
+import 'package:epub_kit/epub_kit.dart';
 
 main() async {
   String fileName = "hittelOnGoldMines.epub";
@@ -20,14 +18,14 @@ main() async {
   test("Test Epub Ref", () async {
     EpubBookRef epubRef = await EpubReader.openBook(bytes);
 
-    expect(epubRef.Author, equals("John S. Hittell"));
-    expect(epubRef.Title, equals("Hittel on Gold Mines and Mining"));
+    expect(epubRef.author, equals("John S. Hittell"));
+    expect(epubRef.title, equals("Hittel on Gold Mines and Mining"));
   });
   test("Test Epub Read", () async {
     EpubBook epubRef = await EpubReader.readBook(bytes);
 
-    expect(epubRef.Author, equals("John S. Hittell"));
-    expect(epubRef.Title, equals("Hittel on Gold Mines and Mining"));
+    expect(epubRef.author, equals("John S. Hittell"));
+    expect(epubRef.title, equals("Hittel on Gold Mines and Mining"));
   });
 
   test("Test can read", () async {

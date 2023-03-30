@@ -1,13 +1,11 @@
-library epubreadertest;
-
 import 'dart:math';
 
-import 'package:epub/src/schema/opf/epub_metadata.dart';
-import 'package:epub/src/schema/opf/epub_metadata_contributor.dart';
-import 'package:epub/src/schema/opf/epub_metadata_creator.dart';
-import 'package:epub/src/schema/opf/epub_metadata_date.dart';
-import 'package:epub/src/schema/opf/epub_metadata_identifier.dart';
-import 'package:epub/src/schema/opf/epub_metadata_meta.dart';
+import 'package:epub_kit/src/schema/opf/epub_metadata.dart';
+import 'package:epub_kit/src/schema/opf/epub_metadata_contributor.dart';
+import 'package:epub_kit/src/schema/opf/epub_metadata_creator.dart';
+import 'package:epub_kit/src/schema/opf/epub_metadata_date.dart';
+import 'package:epub_kit/src/schema/opf/epub_metadata_identifier.dart';
+import 'package:epub_kit/src/schema/opf/epub_metadata_meta.dart';
 import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
@@ -19,28 +17,25 @@ main() async {
       new RandomDataGenerator(new Random(123778), length);
 
   var reference = generator.randomEpubMetadata();
-  EpubMetadata testMetadata;
+  late EpubMetadata testMetadata;
   setUp(() async {
     testMetadata = new EpubMetadata()
-      ..Contributors = List.from(reference.Contributors)
-      ..Coverages = List.from(reference.Coverages)
-      ..Creators = List.from(reference.Creators)
-      ..Dates = List.from(reference.Dates)
-      ..Description = reference.Description
-      ..Formats = List.from(reference.Formats)
-      ..Identifiers = List.from(reference.Identifiers)
-      ..Languages = List.from(reference.Languages)
-      ..MetaItems = List.from(reference.MetaItems)
-      ..Publishers = List.from(reference.Publishers)
-      ..Relations = List.from(reference.Relations)
-      ..Rights = List.from(reference.Rights)
-      ..Sources = List.from(reference.Sources)
-      ..Subjects = List.from(reference.Subjects)
-      ..Titles = List.from(reference.Titles)
-      ..Types = List.from(reference.Types);
-  });
-  tearDown(() async {
-    testMetadata = null;
+      ..contributors = List.from(reference.contributors ?? [])
+      ..coverages = List.from(reference.coverages ?? [])
+      ..creators = List.from(reference.creators ?? [])
+      ..dates = List.from(reference.dates ?? [])
+      ..description = reference.description
+      ..formats = List.from(reference.formats ?? [])
+      ..identifiers = List.from(reference.identifiers ?? [])
+      ..languages = List.from(reference.languages ?? [])
+      ..metaItems = List.from(reference.metaItems ?? [])
+      ..publishers = List.from(reference.publishers ?? [])
+      ..relations = List.from(reference.relations ?? [])
+      ..rights = List.from(reference.rights ?? [])
+      ..sources = List.from(reference.sources ?? [])
+      ..subjects = List.from(reference.subjects ?? [])
+      ..titles = List.from(reference.titles ?? [])
+      ..types = List.from(reference.types ?? []);
   });
 
   group("EpubMetadata", () {
@@ -49,67 +44,67 @@ main() async {
         expect(testMetadata, equals(reference));
       });
       test("is false when Contributors changes", () async {
-        testMetadata.Contributors = [new EpubMetadataContributor()];
+        testMetadata.contributors = [new EpubMetadataContributor()];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Coverages changes", () async {
-        testMetadata.Coverages = [randomString.randomAlpha(length)];
+        testMetadata.coverages = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Creators changes", () async {
-        testMetadata.Creators = [new EpubMetadataCreator()];
+        testMetadata.creators = [new EpubMetadataCreator()];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Dates changes", () async {
-        testMetadata.Dates = [new EpubMetadataDate()];
+        testMetadata.dates = [new EpubMetadataDate()];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Description changes", () async {
-        testMetadata.Description = randomString.randomAlpha(length);
+        testMetadata.description = randomString.randomAlpha(length);
         expect(testMetadata, isNot(reference));
       });
       test("is false when Formats changes", () async {
-        testMetadata.Formats = [randomString.randomAlpha(length)];
+        testMetadata.formats = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Identifiers changes", () async {
-        testMetadata.Identifiers = [new EpubMetadataIdentifier()];
+        testMetadata.identifiers = [new EpubMetadataIdentifier()];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Languages changes", () async {
-        testMetadata.Languages = [randomString.randomAlpha(length)];
+        testMetadata.languages = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when MetaItems changes", () async {
-        testMetadata.MetaItems = [new EpubMetadataMeta()];
+        testMetadata.metaItems = [new EpubMetadataMeta()];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Publishers changes", () async {
-        testMetadata.Publishers = [randomString.randomAlpha(length)];
+        testMetadata.publishers = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Relations changes", () async {
-        testMetadata.Relations = [randomString.randomAlpha(length)];
+        testMetadata.relations = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Rights changes", () async {
-        testMetadata.Rights = [randomString.randomAlpha(length)];
+        testMetadata.rights = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Sources changes", () async {
-        testMetadata.Sources = [randomString.randomAlpha(length)];
+        testMetadata.sources = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Subjects changes", () async {
-        testMetadata.Subjects = [randomString.randomAlpha(length)];
+        testMetadata.subjects = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Titles changes", () async {
-        testMetadata.Titles = [randomString.randomAlpha(length)];
+        testMetadata.titles = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
       test("is false when Types changes", () async {
-        testMetadata.Types = [randomString.randomAlpha(length)];
+        testMetadata.types = [randomString.randomAlpha(length)];
         expect(testMetadata, isNot(reference));
       });
     });
@@ -119,67 +114,67 @@ main() async {
         expect(testMetadata.hashCode, equals(reference.hashCode));
       });
       test("is false when Contributors changes", () async {
-        testMetadata.Contributors = [new EpubMetadataContributor()];
+        testMetadata.contributors = [new EpubMetadataContributor()];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Coverages changes", () async {
-        testMetadata.Coverages = [randomString.randomAlpha(length)];
+        testMetadata.coverages = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Creators changes", () async {
-        testMetadata.Creators = [new EpubMetadataCreator()];
+        testMetadata.creators = [new EpubMetadataCreator()];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Dates changes", () async {
-        testMetadata.Dates = [new EpubMetadataDate()];
+        testMetadata.dates = [new EpubMetadataDate()];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Description changes", () async {
-        testMetadata.Description = randomString.randomAlpha(length);
+        testMetadata.description = randomString.randomAlpha(length);
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Formats changes", () async {
-        testMetadata.Formats = [randomString.randomAlpha(length)];
+        testMetadata.formats = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Identifiers changes", () async {
-        testMetadata.Identifiers = [new EpubMetadataIdentifier()];
+        testMetadata.identifiers = [new EpubMetadataIdentifier()];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Languages changes", () async {
-        testMetadata.Languages = [randomString.randomAlpha(length)];
+        testMetadata.languages = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when MetaItems changes", () async {
-        testMetadata.MetaItems = [new EpubMetadataMeta()];
+        testMetadata.metaItems = [new EpubMetadataMeta()];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Publishers changes", () async {
-        testMetadata.Publishers = [randomString.randomAlpha(length)];
+        testMetadata.publishers = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Relations changes", () async {
-        testMetadata.Relations = [randomString.randomAlpha(length)];
+        testMetadata.relations = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Rights changes", () async {
-        testMetadata.Rights = [randomString.randomAlpha(length)];
+        testMetadata.rights = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Sources changes", () async {
-        testMetadata.Sources = [randomString.randomAlpha(length)];
+        testMetadata.sources = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Subjects changes", () async {
-        testMetadata.Subjects = [randomString.randomAlpha(length)];
+        testMetadata.subjects = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Titles changes", () async {
-        testMetadata.Titles = [randomString.randomAlpha(length)];
+        testMetadata.titles = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
       test("is false when Types changes", () async {
-        testMetadata.Types = [randomString.randomAlpha(length)];
+        testMetadata.types = [randomString.randomAlpha(length)];
         expect(testMetadata.hashCode, isNot(reference.hashCode));
       });
     });

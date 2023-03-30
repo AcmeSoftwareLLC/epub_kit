@@ -9,85 +9,85 @@ import '../schema/opf/epub_manifest_item.dart';
 class ContentReader {
   static EpubContentRef parseContentMap(EpubBookRef bookRef) {
     var result = EpubContentRef();
-    result.Html = <String, EpubTextContentFileRef>{};
-    result.Css = <String, EpubTextContentFileRef>{};
-    result.Images = <String, EpubByteContentFileRef>{};
-    result.Fonts = <String, EpubByteContentFileRef>{};
-    result.AllFiles = <String, EpubContentFileRef>{};
+    result.html = <String, EpubTextContentFileRef>{};
+    result.css = <String, EpubTextContentFileRef>{};
+    result.images = <String, EpubByteContentFileRef>{};
+    result.fonts = <String, EpubByteContentFileRef>{};
+    result.allFiles = <String, EpubContentFileRef>{};
 
-    bookRef.Schema!.Package!.Manifest!.Items!
+    bookRef.schema!.package!.manifest!.items!
         .forEach((EpubManifestItem manifestItem) {
-      var fileName = manifestItem.Href;
-      var contentMimeType = manifestItem.MediaType!;
+      var fileName = manifestItem.href;
+      var contentMimeType = manifestItem.mediaType!;
       var contentType = getContentTypeByContentMimeType(contentMimeType);
       switch (contentType) {
-        case EpubContentType.XHTML_1_1:
-        case EpubContentType.CSS:
-        case EpubContentType.OEB1_DOCUMENT:
-        case EpubContentType.OEB1_CSS:
-        case EpubContentType.XML:
-        case EpubContentType.DTBOOK:
-        case EpubContentType.DTBOOK_NCX:
+        case EpubContentType.xhtml:
+        case EpubContentType.css:
+        case EpubContentType.oeb1Document:
+        case EpubContentType.oeb1Css:
+        case EpubContentType.xml:
+        case EpubContentType.dtbook:
+        case EpubContentType.dtbookNcx:
           var epubTextContentFile = EpubTextContentFileRef(bookRef);
           {
-            epubTextContentFile.FileName = Uri.decodeFull(fileName!);
-            epubTextContentFile.ContentMimeType = contentMimeType;
-            epubTextContentFile.ContentType = contentType;
+            epubTextContentFile.fileName = Uri.decodeFull(fileName!);
+            epubTextContentFile.contentMimeType = contentMimeType;
+            epubTextContentFile.contentType = contentType;
           }
           ;
           switch (contentType) {
-            case EpubContentType.XHTML_1_1:
-              result.Html![fileName] = epubTextContentFile;
+            case EpubContentType.xhtml:
+              result.html![fileName] = epubTextContentFile;
               break;
-            case EpubContentType.CSS:
-              result.Css![fileName] = epubTextContentFile;
+            case EpubContentType.css:
+              result.css![fileName] = epubTextContentFile;
               break;
-            case EpubContentType.DTBOOK:
-            case EpubContentType.DTBOOK_NCX:
-            case EpubContentType.OEB1_DOCUMENT:
-            case EpubContentType.XML:
-            case EpubContentType.OEB1_CSS:
-            case EpubContentType.IMAGE_GIF:
-            case EpubContentType.IMAGE_JPEG:
-            case EpubContentType.IMAGE_PNG:
-            case EpubContentType.IMAGE_SVG:
-            case EpubContentType.FONT_TRUETYPE:
-            case EpubContentType.FONT_OPENTYPE:
-            case EpubContentType.OTHER:
+            case EpubContentType.dtbook:
+            case EpubContentType.dtbookNcx:
+            case EpubContentType.oeb1Document:
+            case EpubContentType.xml:
+            case EpubContentType.oeb1Css:
+            case EpubContentType.imageGIF:
+            case EpubContentType.imageJPEG:
+            case EpubContentType.imagePNG:
+            case EpubContentType.imageSVG:
+            case EpubContentType.fontTrueType:
+            case EpubContentType.fontOpenType:
+            case EpubContentType.other:
               break;
           }
-          result.AllFiles![fileName] = epubTextContentFile;
+          result.allFiles![fileName] = epubTextContentFile;
           break;
         default:
           var epubByteContentFile = EpubByteContentFileRef(bookRef);
           {
-            epubByteContentFile.FileName = Uri.decodeFull(fileName!);
-            epubByteContentFile.ContentMimeType = contentMimeType;
-            epubByteContentFile.ContentType = contentType;
+            epubByteContentFile.fileName = Uri.decodeFull(fileName!);
+            epubByteContentFile.contentMimeType = contentMimeType;
+            epubByteContentFile.contentType = contentType;
           }
           ;
           switch (contentType) {
-            case EpubContentType.IMAGE_GIF:
-            case EpubContentType.IMAGE_JPEG:
-            case EpubContentType.IMAGE_PNG:
-            case EpubContentType.IMAGE_SVG:
-              result.Images![fileName] = epubByteContentFile;
+            case EpubContentType.imageGIF:
+            case EpubContentType.imageJPEG:
+            case EpubContentType.imagePNG:
+            case EpubContentType.imageSVG:
+              result.images![fileName] = epubByteContentFile;
               break;
-            case EpubContentType.FONT_TRUETYPE:
-            case EpubContentType.FONT_OPENTYPE:
-              result.Fonts![fileName] = epubByteContentFile;
+            case EpubContentType.fontTrueType:
+            case EpubContentType.fontOpenType:
+              result.fonts![fileName] = epubByteContentFile;
               break;
-            case EpubContentType.CSS:
-            case EpubContentType.XHTML_1_1:
-            case EpubContentType.DTBOOK:
-            case EpubContentType.DTBOOK_NCX:
-            case EpubContentType.OEB1_DOCUMENT:
-            case EpubContentType.XML:
-            case EpubContentType.OEB1_CSS:
-            case EpubContentType.OTHER:
+            case EpubContentType.css:
+            case EpubContentType.xhtml:
+            case EpubContentType.dtbook:
+            case EpubContentType.dtbookNcx:
+            case EpubContentType.oeb1Document:
+            case EpubContentType.xml:
+            case EpubContentType.oeb1Css:
+            case EpubContentType.other:
               break;
           }
-          result.AllFiles![fileName] = epubByteContentFile;
+          result.allFiles![fileName] = epubByteContentFile;
           break;
       }
     });
@@ -98,35 +98,35 @@ class ContentReader {
       String contentMimeType) {
     switch (contentMimeType.toLowerCase()) {
       case 'application/xhtml+xml':
-        return EpubContentType.XHTML_1_1;
+        return EpubContentType.xhtml;
       case 'application/x-dtbook+xml':
-        return EpubContentType.DTBOOK;
+        return EpubContentType.dtbook;
       case 'application/x-dtbncx+xml':
-        return EpubContentType.DTBOOK_NCX;
+        return EpubContentType.dtbookNcx;
       case 'text/x-oeb1-document':
-        return EpubContentType.OEB1_DOCUMENT;
+        return EpubContentType.oeb1Document;
       case 'application/xml':
-        return EpubContentType.XML;
+        return EpubContentType.xml;
       case 'text/css':
-        return EpubContentType.CSS;
+        return EpubContentType.css;
       case 'text/x-oeb1-css':
-        return EpubContentType.OEB1_CSS;
+        return EpubContentType.oeb1Css;
       case 'image/gif':
-        return EpubContentType.IMAGE_GIF;
+        return EpubContentType.imageGIF;
       case 'image/jpeg':
-        return EpubContentType.IMAGE_JPEG;
+        return EpubContentType.imageJPEG;
       case 'image/png':
-        return EpubContentType.IMAGE_PNG;
+        return EpubContentType.imagePNG;
       case 'image/svg+xml':
-        return EpubContentType.IMAGE_SVG;
+        return EpubContentType.imageSVG;
       case 'font/truetype':
-        return EpubContentType.FONT_TRUETYPE;
+        return EpubContentType.fontTrueType;
       case 'font/opentype':
-        return EpubContentType.FONT_OPENTYPE;
+        return EpubContentType.fontOpenType;
       case 'application/vnd.ms-opentype':
-        return EpubContentType.FONT_OPENTYPE;
+        return EpubContentType.fontOpenType;
       default:
-        return EpubContentType.OTHER;
+        return EpubContentType.other;
     }
   }
 }

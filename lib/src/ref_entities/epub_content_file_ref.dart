@@ -1,7 +1,6 @@
-import 'dart:async';
+import 'dart:convert' as convert;
 
 import 'package:archive/archive.dart';
-import 'dart:convert' as convert;
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:quiver/core.dart';
 
@@ -10,19 +9,18 @@ import '../utils/zip_path_utils.dart';
 import 'epub_book_ref.dart';
 
 abstract class EpubContentFileRef {
-  late EpubBookRef epubBookRef;
+  String? fileName;
 
-  String? FileName;
+  EpubContentType? contentType;
+  String? contentMimeType;
 
-  EpubContentType? ContentType;
-  String? ContentMimeType;
-  EpubContentFileRef(EpubBookRef epubBookRef) {
-    this.epubBookRef = epubBookRef;
-  }
+  EpubContentFileRef(EpubBookRef epubBookRef) : this.epubBookRef = epubBookRef;
+
+  final EpubBookRef epubBookRef;
 
   @override
   int get hashCode =>
-      hash3(FileName.hashCode, ContentMimeType.hashCode, ContentType.hashCode);
+      hash3(fileName.hashCode, contentMimeType.hashCode, contentType.hashCode);
 
   @override
   bool operator ==(other) {
@@ -30,16 +28,15 @@ abstract class EpubContentFileRef {
       return false;
     }
 
-    return other.FileName == FileName &&
-        other.ContentMimeType == ContentMimeType &&
-        other.ContentType == ContentType;
+    return other.fileName == fileName &&
+        other.contentMimeType == contentMimeType &&
+        other.contentType == contentType;
   }
 
   ArchiveFile getContentFileEntry() {
     var contentFilePath = ZipPathUtils.combine(
-        epubBookRef.Schema!.ContentDirectoryPath, FileName);
-    var contentFileEntry = epubBookRef.EpubArchive()!
-        .files
+        epubBookRef.schema!.contentDirectoryPath, fileName);
+    var contentFileEntry = epubBookRef.archive.files
         .firstWhereOrNull((ArchiveFile x) => x.name == contentFilePath);
     if (contentFileEntry == null) {
       throw Exception(
@@ -56,19 +53,19 @@ abstract class EpubContentFileRef {
     var contentStream = <int>[];
     if (contentFileEntry.content == null) {
       throw Exception(
-          'Incorrect EPUB file: content file \"$FileName\" specified in manifest is not found.');
+          'Incorrect EPUB file: content file \"$fileName\" specified in manifest is not found.');
     }
     contentStream.addAll(contentFileEntry.content);
     return contentStream;
   }
 
-  Future<List<int>> readContentAsBytes() async {
+  List<int> readContentAsBytes() {
     var contentFileEntry = getContentFileEntry();
     var content = openContentStream(contentFileEntry);
     return content;
   }
 
-  Future<String> readContentAsText() async {
+  String readContentAsText() {
     var contentStream = getContentStream();
     var result = convert.utf8.decode(contentStream);
     return result;

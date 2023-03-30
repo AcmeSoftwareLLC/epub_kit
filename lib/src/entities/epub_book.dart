@@ -8,24 +8,24 @@ import 'epub_content.dart';
 import 'epub_schema.dart';
 
 class EpubBook {
-  String? Title;
-  String? Author;
-  List<String?>? AuthorList;
-  EpubSchema? Schema;
-  EpubContent? Content;
-  Uint8List? CoverImage;
-  List<EpubChapter>? Chapters;
+  String? title;
+  String? author;
+  List<String?>? authors;
+  EpubSchema? schema;
+  EpubContent? content;
+  Uint8List? coverImage;
+  List<EpubChapter>? chapters;
 
   @override
   int get hashCode {
     var objects = [
-      Title.hashCode,
-      Author.hashCode,
-      Schema.hashCode,
-      Content.hashCode,
-      CoverImage.hashCode,
-      ...AuthorList?.map((author) => author.hashCode) ?? [0],
-      ...Chapters?.map((chapter) => chapter.hashCode) ?? [0],
+      title.hashCode,
+      author.hashCode,
+      schema.hashCode,
+      content.hashCode,
+      coverImage.hashCode,
+      ...authors?.map((author) => author.hashCode) ?? [0],
+      ...chapters?.map((chapter) => chapter.hashCode) ?? [0],
     ];
     return hashObjects(objects);
   }
@@ -36,12 +36,12 @@ class EpubBook {
       return false;
     }
 
-    return Title == other.Title &&
-        Author == other.Author &&
-        collections.listsEqual(AuthorList, other.AuthorList) &&
-        Schema == other.Schema &&
-        Content == other.Content &&
-        collections.listsEqual(CoverImage!, other.CoverImage!) &&
-        collections.listsEqual(Chapters, other.Chapters);
+    return title == other.title &&
+        author == other.author &&
+        collections.listsEqual(authors, other.authors) &&
+        schema == other.schema &&
+        content == other.content &&
+        collections.listsEqual(coverImage!, other.coverImage!) &&
+        collections.listsEqual(chapters, other.chapters);
   }
 }

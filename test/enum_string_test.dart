@@ -2,25 +2,25 @@ library epubtest;
 
 import 'package:test/test.dart';
 
-import 'package:epub/epub.dart';
+import 'package:epub_kit/epub_kit.dart';
 
 main() {
   test("Enum One", () {
     expect(new EnumFromString<Simple>(Simple.values).get("ONE"),
-        equals(Simple.ONE));
+        equals(Simple.one));
   });
   test("Enum Two", () {
     expect(new EnumFromString<Simple>(Simple.values).get("TWO"),
-        equals(Simple.TWO));
+        equals(Simple.two));
   });
   test("Enum One", () {
     expect(new EnumFromString<Simple>(Simple.values).get("THREE"),
-        equals(Simple.THREE));
+        equals(Simple.three));
   });
   test("Enum One Lower Case", () {
     expect(new EnumFromString<Simple>(Simple.values).get("one"),
-        equals(Simple.ONE));
+        equals(Simple.one));
   });
 }
 
-enum Simple { ONE, TWO, THREE }
+enum Simple { one, two, three }

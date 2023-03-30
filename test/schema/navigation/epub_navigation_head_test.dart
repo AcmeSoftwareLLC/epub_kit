@@ -1,8 +1,6 @@
-library epubreadertest;
-
 import 'dart:math';
 
-import 'package:epub/src/schema/navigation/epub_navigation_head.dart';
+import 'package:epub_kit/src/schema/navigation/epub_navigation_head.dart';
 import 'package:test/test.dart';
 
 import '../../random_data_generator.dart';
@@ -13,14 +11,12 @@ main() async {
 
   final EpubNavigationHead reference = generator.randomEpubNavigationHead();
 
-  EpubNavigationHead testGuideReference;
+  late EpubNavigationHead testGuideReference;
   setUp(() async {
     testGuideReference = new EpubNavigationHead()
-      ..Metadata = List.from(reference.Metadata);
+      ..metadata = List.from(reference.metadata ?? []);
   });
-  tearDown(() async {
-    testGuideReference = null;
-  });
+
   group("EpubNavigationHead", () {
     group(".equals", () {
       test("is true for equivalent objects", () async {
@@ -28,7 +24,7 @@ main() async {
       });
 
       test("is false when Metadata changes", () async {
-        testGuideReference.Metadata.add(generator.randomNavigationHeadMeta());
+        testGuideReference.metadata!.add(generator.randomNavigationHeadMeta());
         expect(testGuideReference, isNot(reference));
       });
     });
@@ -39,7 +35,7 @@ main() async {
       });
 
       test("is false when Metadata changes", () async {
-        testGuideReference.Metadata.add(generator.randomNavigationHeadMeta());
+        testGuideReference.metadata!.add(generator.randomNavigationHeadMeta());
         expect(testGuideReference.hashCode, isNot(reference.hashCode));
       });
     });

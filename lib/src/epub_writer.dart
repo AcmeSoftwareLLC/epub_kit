@@ -18,44 +18,44 @@ class EpubWriter {
     final buffer = StringBuffer(
         '<?xml version="1.0"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path=')
       ..write('"')
-      ..write(book.Schema?.ContentDirectoryPath)
-      ..write((book.Schema?.ContentDirectoryPath ?? '').isEmpty
+      ..write(book.schema?.contentDirectoryPath)
+      ..write((book.schema?.contentDirectoryPath ?? '').isEmpty
           ? 'content.opf'
           : '/content.opf')
       ..write('"')
       ..write(
           ' media-type="application/oebps-package+xml"/></rootfiles></container>');
-    final _container_file = buffer.toString();
+    final containerContent = buffer.toString();
 
     // Add simple metadata
     arch.addFile(ArchiveFile.noCompress(
         'mimetype', 20, convert.utf8.encode('application/epub+zip')));
 
     // Add Container file
-    arch.addFile(ArchiveFile('META-INF/container.xml', _container_file.length,
-        convert.utf8.encode(_container_file)));
+    arch.addFile(ArchiveFile('META-INF/container.xml', containerContent.length,
+        convert.utf8.encode(containerContent)));
 
     // Add all content to the archive
-    book.Content!.AllFiles!.forEach((name, file) {
+    book.content!.allFiles.forEach((name, file) {
       List<int>? content;
 
       if (file is EpubByteContentFile) {
-        content = file.Content;
+        content = file.content;
       } else if (file is EpubTextContentFile) {
-        content = convert.utf8.encode(file.Content!);
+        content = convert.utf8.encode(file.content!);
       }
 
       arch.addFile(ArchiveFile(
-          ZipPathUtils.combine(book.Schema!.ContentDirectoryPath, name)!,
+          ZipPathUtils.combine(book.schema!.contentDirectoryPath, name)!,
           content!.length,
           content));
     });
 
     // Generate the content.opf file and add it to the Archive
-    var contentopf = EpubPackageWriter.writeContent(book.Schema!.Package!);
+    var contentopf = EpubPackageWriter.writeContent(book.schema!.package!);
 
     arch.addFile(ArchiveFile(
-        ZipPathUtils.combine(book.Schema!.ContentDirectoryPath, 'content.opf')!,
+        ZipPathUtils.combine(book.schema!.contentDirectoryPath, 'content.opf')!,
         contentopf.length,
         convert.utf8.encode(contentopf)));
 
