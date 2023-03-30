@@ -117,3 +117,5 @@ var written = await EpubWriter.writeBook(epubBook);
 // You can even re-read the book into a new object! 
 var bookRoundTrip = await EpubReader.readBook(written);
 ```
+
+Note: Fork of [package:epub](https://pub.dev/packages/epub).
