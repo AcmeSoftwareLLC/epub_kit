@@ -1,15 +1,5 @@
 # Epub Kit
-
 Epub Reader and Writer for Dart inspired by [this fantastic C# Epub Reader](https://github.com/versfx/EpubReader)
-
-This does not rely on the ```dart:io``` package in any way, so it is available for both desktop and web-based implementations
-
-## Installing
-Add the package to the ```dependencies``` section of your pubspec.yaml
-```
-dependencies:
-  epub: ^2.0.0
-```
 
 ## Example
 ```dart
